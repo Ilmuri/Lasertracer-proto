@@ -18,18 +18,22 @@
 		<script type="text/javascript" src="circle.js"></script>
 		<script type="text/javascript" src="rectangle.js"></script>
 		<script type="text/javascript" src="ray.js"></script>
+		<script type="text/javascript" src="convexlens.js"></script>
 		<script type="text/javascript" src="caster.js"></script>
 		
 		<script type="text/javascript">
 			
-			var rect = new Rectangle(10,0,2,2,Math.PI/4);
-			var circle = new Circle(vec3.fromValues(5,0,1),0.6);
-			var objects = [circle, rect]
+			//var rect = new Rectangle(10,0,2,2,Math.PI/4);
+			//var circle = new Circle(vec3.fromValues(5,0,1),0.6);
+			//var objects = [circle, rect]
 			/*var objects = [];
 			
 			for(var i = 0; i < 3; i++) {
 				objects.push(new Rectangle(i*5+2,0,2,2,Math.PI/4*i/2));
 			}*/
+			var lens = new ConvexLens();
+			lens.position = vec3.fromValues(5,0,1);
+			var objects = [lens];
 			
 			var canvas = document.getElementById("canvas");
 			var ctx = canvas.getContext("2d");
@@ -44,11 +48,11 @@
 				ctx.translate(0,canvas.height*0.5);
 				ctx.scale(64,64);
 				
-				circle.position = vec3.fromValues(5,Math.sin(time*0.0001)*0.2,1);
+				//circle.position = vec3.fromValues(5,Math.sin(time*0.0001)*0.2,1);
 				
 				
 				for(var i in objects) {
-					objects[i].rotation += 0.01*i+0.01;
+					//objects[i].rotation += 0.01*i+0.01;
 					ctx.save();
 					ctx.translate(objects[i].position[0], objects[i].position[1])
 					ctx.scale(objects[i].scale[0], objects[i].scale[1]);
@@ -70,7 +74,7 @@
 					
 					var r = Math.round(((n+1)/3)*255);
 					var g = Math.round((1-(n+1)/3)*255);
-					var b = 0;
+					var b = 10;
 					ctx.strokeStyle = "rgb("+r+","+g+","+b+")";
 					
 					ctx.beginPath();
@@ -84,13 +88,13 @@
 				ctx.restore();
 			}
 			render(10000);
-			(function loop(time){
+			/*(function loop(time){
 				setTimeout(function(){
 					requestAnimationFrame(loop);
 					render(time);
-				}, 20)
+				}, 2000)
 				
-			})();
+			})();*/
 		</script>
 		
 	</body>
