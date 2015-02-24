@@ -29,22 +29,28 @@ function Caster(ray, objects) {
 			}
 			
 			if(minInterval !== undefined) {
-				this.points.push(this.ray.getPoint(minInterval.min));
+				var entryPoint = this.ray.getPoint(minInterval.min);
+				this.points.push(entryPoint);
 				var refractedDirection = this.ray.refract(minInterval.minNormal, 1/minInterval.object.refractiveIndex);
 				if(refractedDirection === undefined) {
-					break;
+					this.ray = new Ray(entryPoint, this.ray.reflect(minInterval.minNormal));
+					lastObject = minInterval.object;
+					//break;
+				} else {
+					var newRay = new Ray(this.ray.getPoint(minInterval.min), refractedDirection);
+					var exitInterval = minInterval.object.intersect(newRay);
+					if(exitInterval !== undefined) {
+						var exitPoint = newRay.getPoint(exitInterval.max);
+						var exitNormal = exitInterval.maxNormal;
+						this.points.push(exitPoint);
+						refractedDirection = newRay.refract(vec3.scale(vec3.create(),exitNormal,-1), minInterval.object.refractiveIndex);
+						if(refractedDirection === undefined) {
+							break;
+						}
+						this.ray = new Ray(exitPoint, refractedDirection);
+					}
+					lastObject = minInterval.object;
 				}
-				var newRay = new Ray(this.ray.getPoint(minInterval.min), refractedDirection);
-				var exitInterval = minInterval.object.intersect(newRay);
-				var exitPoint = newRay.getPoint(exitInterval.max);
-				var exitNormal = exitInterval.maxNormal;
-				this.points.push(exitPoint);
-				refractedDirection = newRay.refract(vec3.scale(vec3.create(),exitNormal,-1), minInterval.object.refractiveIndex);
-				if(refractedDirection === undefined) {
-					break;
-				}
-				this.ray = new Ray(exitPoint, refractedDirection);
-				lastObject = minInterval.object;
 			}
 		
 		} while(minInterval !== undefined);

@@ -16,7 +16,7 @@ function WorldObject() {
 		mat3.identity(this._toLocal);
 		mat3.identity(this._toWorld);
 		mat3.translate(this._toWorld, this._toWorld, this._position);
-		mat3.rotate(this._toWorld, this._toWorld, -this._rotation);
+		mat3.rotate(this._toWorld, this._toWorld, this._rotation);
 		mat3.scale(this._toWorld, this._toWorld, this._scale);
 		
 		mat3.invert(this._toLocal, this._toWorld);
