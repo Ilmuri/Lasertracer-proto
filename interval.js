@@ -7,7 +7,7 @@ function Interval(min, max, minNormal, maxNormal, object) {
 	this.object = object;
 	
 	this.intersect = function(b) {
-		if(this.min === undefined || this.max === undefined || b.min === undefined || b.max === undefined) {
+		if(b === undefined || this.min === undefined || this.max === undefined || b.min === undefined || b.max === undefined) {
 			
 			return new Interval(undefined, undefined, undefined, undefined, this.object);
 		}
@@ -16,7 +16,7 @@ function Interval(min, max, minNormal, maxNormal, object) {
 		var minNormal;
 		var maxNormal;
 		if(max<min) {
-			return undefined;
+			return new Interval(undefined, undefined, undefined, undefined, this.object);
 		}
 		if(this.min>b.min) {
 			minNormal = this.minNormal;

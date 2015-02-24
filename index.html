@@ -32,6 +32,7 @@
 				objects.push(new Rectangle(i*5+2,0,2,2,Math.PI/4*i/2));
 			}*/
 			var lens = new ConvexLens();
+			console.log(lens);
 			lens.position = vec3.fromValues(5,0,1);
 			var objects = [lens];
 			
@@ -52,7 +53,7 @@
 				
 				
 				for(var i in objects) {
-					//objects[i].rotation += 0.01*i+0.01;
+					objects[i].rotation += 0.01*i+0.01;
 					ctx.save();
 					ctx.translate(objects[i].position[0], objects[i].position[1])
 					ctx.scale(objects[i].scale[0], objects[i].scale[1]);
@@ -88,13 +89,13 @@
 				ctx.restore();
 			}
 			render(10000);
-			/*(function loop(time){
+			(function loop(time){
 				setTimeout(function(){
 					requestAnimationFrame(loop);
 					render(time);
-				}, 2000)
+				}, 20)
 				
-			})();*/
+			})();
 		</script>
 		
 	</body>

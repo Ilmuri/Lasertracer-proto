@@ -39,6 +39,10 @@ function ConvexLens() {
 			}
 		}
 		
+		if(finalInterval.minNormal !== undefined && finalInterval.maxNormal) {
+			finalInterval.minNormal = this.toWorld(vec3.create(), finalInterval.minNormal);
+			finalInterval.maxNormal = this.toWorld(vec3.create(), finalInterval.maxNormal);
+		}
 		
 		return finalInterval;
 	}
